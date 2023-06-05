@@ -1,7 +1,10 @@
 const {legacy_createStore  } = require('redux')
 const createStore = legacy_createStore
 const bindActionCreators = require('redux').bindActionCreators
-
+const combineReducers = require("redux").combineReducers
+const applyMiddleware = require('redux').applyMiddleware
+const reduxLogger = require("redux-logger")
+const logger = reduxLogger.createLogger()
 
 const CAKE_ORDERED = 'CAKE_ORDERED'
 const CAKE_RESTOCKED = "CAKE_RESTOCKED"
@@ -43,7 +46,7 @@ function iceCreamRestocked(quantity = 1) {
 }
 
 
-const  reducer = (state = initialState , action ) => {
+const  cakereducer = (state = initialState , action ) => {
     switch(action.type) {
         case CAKE_ORDERED :
             return  {
@@ -55,7 +58,15 @@ const  reducer = (state = initialState , action ) => {
                 ...state,
                 numOfCakes : state.numOfCakes += action.payload
             }
+        default: {
 
+            return state
+        }
+    }
+} 
+
+const  icecreamreducer = (state = initialState , action ) => {
+    switch(action.type) {
             case ICECREAM_ORDERED:
                 return {
                     ...state,
@@ -75,13 +86,20 @@ const  reducer = (state = initialState , action ) => {
     }
 } 
 
-const store = createStore(reducer)
+const rootreducer = combineReducers({
+    cake : cakereducer,
+    icecream :  icecreamreducer
+})
+
+const store = createStore(rootreducer,applyMiddleware(logger))
 
 console.log('initialState',store.getState())
 
 const unsubscribe =  store.subscribe(()=>{
     console.log("updata State", store.getState())
 })
+
+
 
 
 const action = bindActionCreators({cakeOrdered,cakeReStocked,iceCreamOrdered,iceCreamRestocked},store.dispatch) 
@@ -91,5 +109,6 @@ action.cakeOrdered()
 action.cakeReStocked(2)
 action.iceCreamOrdered()
 action.iceCreamRestocked(20)
+
 
 unsubscribe()
