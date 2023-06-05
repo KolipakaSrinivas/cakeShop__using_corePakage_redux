@@ -5,13 +5,16 @@ const bindActionCreators = require('redux').bindActionCreators
 
 const CAKE_ORDERED = 'CAKE_ORDERED'
 const CAKE_RESTOCKED = "CAKE_RESTOCKED"
+const ICECREAM_ORDERED = "ICECREAM_ORDERED"
+const ICECREAM_RESTOCKED = "ICECREAM_RESTOCKED"
 
 const initialState = {
-    numOfCakes : 10
+    numOfCakes : 10,
+    numOfIcecream : 20
 }
 
 
-function cakeOrdered(quantity) {
+function cakeOrdered(quantity = 1) {
     return {
         type : CAKE_ORDERED,
         payload :quantity
@@ -21,6 +24,20 @@ function cakeOrdered(quantity) {
 function cakeReStocked(quantity = 1) {
     return {
         type : CAKE_RESTOCKED,
+        payload : quantity
+    }
+}
+
+function iceCreamOrdered(quantity = 1) {
+    return {
+        type :ICECREAM_ORDERED,
+        payload : quantity
+    }
+}
+
+function iceCreamRestocked(quantity = 1) {
+    return {
+        type :ICECREAM_RESTOCKED,
         payload : quantity
     }
 }
@@ -38,8 +55,23 @@ const  reducer = (state = initialState , action ) => {
                 ...state,
                 numOfCakes : state.numOfCakes += action.payload
             }
-        default:
+
+            case ICECREAM_ORDERED:
+                return {
+                    ...state,
+                    numOfIcecream : state.numOfIcecream - action.payload
+
+                }
+            case ICECREAM_RESTOCKED:
+                return {
+                    ...state,
+                    numOfIcecream :state.numOfIcecream + action.payload
+                } 
+
+        default: {
+
             return state
+        }
     }
 } 
 
@@ -52,9 +84,12 @@ const unsubscribe =  store.subscribe(()=>{
 })
 
 
-const action = bindActionCreators({cakeOrdered,cakeReStocked},store.dispatch) 
+const action = bindActionCreators({cakeOrdered,cakeReStocked,iceCreamOrdered,iceCreamRestocked},store.dispatch) 
 
 
 action.cakeOrdered()
 action.cakeReStocked(2)
+action.iceCreamOrdered()
+action.iceCreamRestocked(20)
+
 unsubscribe()
