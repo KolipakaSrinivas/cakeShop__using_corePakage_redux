@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/KolipakaSrinivas/cakeShop__using_corePakage_redux#readme",
   "dependencies": {
+    "immer": "^10.0.2",
     "redux": "^4.2.1",
     "redux-logger": "^3.0.6"
   }
