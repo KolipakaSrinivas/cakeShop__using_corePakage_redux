@@ -1,0 +1,22 @@
+{
+  "name": "cakeshop__using_corepakage_redux",
+  "version": "1.0.0",
+  "description": "building a javaScript appliction using redux for state management",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KolipakaSrinivas/cakeShop__using_corePakage_redux.git"
+  },
+  "author": "srinivas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KolipakaSrinivas/cakeShop__using_corePakage_redux/issues"
+  },
+  "homepage": "https://github.com/KolipakaSrinivas/cakeShop__using_corePakage_redux#readme",
+  "dependencies": {
+    "redux": "^4.2.1"
+  }
+}
