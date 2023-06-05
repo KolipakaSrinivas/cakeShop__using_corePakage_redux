@@ -1,6 +1,6 @@
 const {legacy_createStore  } = require('redux')
-
 const createStore = legacy_createStore
+const bindActionCreators = require('redux').bindActionCreators
 
 
 const CAKE_ORDERED = 'CAKE_ORDERED'
@@ -50,8 +50,11 @@ console.log('initialState',store.getState())
 const unsubscribe =  store.subscribe(()=>{
     console.log("updata State", store.getState())
 })
-store.dispatch(cakeOrdered(2))
-store.dispatch(cakeOrdered())
-store.dispatch(cakeReStocked(10))
 
+
+const action = bindActionCreators({cakeOrdered,cakeReStocked},store.dispatch) 
+
+
+action.cakeOrdered()
+action.cakeReStocked(2)
 unsubscribe()
